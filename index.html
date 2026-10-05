@@ -1,0 +1,368 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>FanDuel Homepage</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0b0b0c; --surface:#1a1a1b; --surface-2:#232325; --line:#333;
+  --text:#fff; --muted:#b5b5b8; --blue:#1493ff; --blue-btn:#0070eb; --green:#128000;
+  --gold:#6b5a00; --gold-text:#ffe58a; --ease:cubic-bezier(.2,.8,.2,1);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:Inter,system-ui,sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+img{display:block;max-width:100%}
+button{font:inherit;cursor:pointer;border:0;background:none;color:inherit}
+.wrap{max-width:1280px;margin:0 auto;padding:0 24px}
+.blue{color:var(--blue)}
+
+/* NAV */
+.nav{position:sticky;top:0;z-index:50;background:rgba(11,11,12,.72);backdrop-filter:blur(14px);border-bottom:1px solid transparent;transition:border-color .3s,background .3s}
+.nav.scrolled{border-color:#222;background:rgba(11,11,12,.92)}
+.nav .wrap{display:flex;align-items:center;gap:32px;height:64px;max-width:1360px}
+.logo{display:flex;align-items:center;gap:6px;font-weight:800;color:var(--blue);font-size:18px;letter-spacing:.5px}
+.nav ul{display:flex;gap:32px;list-style:none;font-size:14px}
+.nav ul a{position:relative;padding:6px 0;color:#eee}
+.nav ul a::after{content:"";position:absolute;left:0;right:0;bottom:0;height:2px;background:var(--blue);transform:scaleX(0);transform-origin:left;transition:transform .3s var(--ease)}
+.nav ul a:hover::after{transform:scaleX(1)}
+.nav-r{margin-left:auto;display:flex;gap:16px;align-items:center}
+.pill{display:flex;align-items:center;gap:8px;background:#222;border-radius:99px;padding:8px 14px;font-size:14px;transition:background .2s}
+.pill:hover{background:#2d2d2f}
+.btn{display:inline-flex;align-items:center;justify-content:center;border-radius:4px;font-size:16px;padding:12px 24px;white-space:nowrap;transition:transform .2s var(--ease),box-shadow .25s,background .2s}
+.btn:hover{transform:translateY(-1px)}
+.btn:active{transform:translateY(1px) scale(.98)}
+.btn-green{background:var(--green);padding:8px 26px;font-size:14px}
+.btn-green:hover{box-shadow:0 6px 20px -6px #1aa000}
+.btn-blue{background:var(--blue-btn)}
+.btn-blue:hover{background:#0a7dff;box-shadow:0 8px 24px -8px var(--blue-btn)}
+.btn-outline{border:1px solid var(--blue);color:var(--blue);padding:10px 16px}
+.btn-outline:hover{background:rgba(20,147,255,.1)}
+.burger{display:none;width:36px;height:36px}
+.burger span{display:block;height:2px;background:#fff;margin:6px 8px;transition:transform .3s}
+
+/* HERO */
+h1{font-size:clamp(34px,5vw,64px);font-weight:700;text-align:center;letter-spacing:-.02em;margin:40px 0}
+.hero-card{position:relative;overflow:hidden;border-radius:24px;display:grid;grid-template-columns:1fr 1fr;align-items:end;min-height:560px;margin-bottom:40px;isolation:isolate}
+.hero-card.sb{background:radial-gradient(70% 90% at 80% 100%,#0a49b8 0,#061b4b 45%,#05112d 100%)}
+.hero-card.cas{background:radial-gradient(70% 90% at 80% 100%,#4116a3 0,#26085a 45%,#170433 100%)}
+.hero-copy{padding:96px 60px;align-self:center;position:relative;z-index:2}
+.brand{display:flex;align-items:center;gap:6px;font-size:18px;letter-spacing:.3px;margin-bottom:12px}
+.hero-copy h2{font-size:clamp(30px,3.6vw,48px);line-height:1.1;font-weight:700;letter-spacing:-.01em;margin-bottom:24px}
+.offer{width:min(358px,100%);background:#0b0b10;border-radius:10px;padding:16px;position:relative}
+.offer::before{content:"";position:absolute;inset:-2px;border-radius:12px;z-index:-1;background:conic-gradient(from var(--a,0deg),#4b8a4b,#e6c46a,#e98b7a,#7aa0e6,#4b8a4b);animation:spin 6s linear infinite}
+@property --a{syntax:"<angle>";inherits:false;initial-value:0deg}
+@keyframes spin{to{--a:360deg}}
+.tag{display:inline-block;background:var(--gold);color:var(--gold-text);font-size:11px;letter-spacing:1px;padding:3px 5px;border-radius:2px;margin-bottom:10px}
+.offer p{font-size:20px;font-weight:600;line-height:1.4;margin-bottom:22px}
+.offer .btn{width:100%}
+.phone{justify-self:center;width:min(322px,80%);position:relative;z-index:2;will-change:transform;transition:transform .6s var(--ease)}
+.phone img{width:100%;filter:drop-shadow(0 30px 40px rgba(0,0,0,.45))}
+.glow{position:absolute;right:8%;bottom:-20%;width:50%;aspect-ratio:1;border-radius:50%;filter:blur(80px);opacity:.55;z-index:0;animation:breathe 6s ease-in-out infinite}
+.sb .glow{background:#1a6bff}.cas .glow{background:#8c3dff}
+@keyframes breathe{50%{opacity:.85;transform:scale(1.1)}}
+.spark{position:absolute;z-index:1;color:#3d7bff;animation:twinkle 3.5s ease-in-out infinite;pointer-events:none}
+.cas .spark{color:#9a4dff}
+@keyframes twinkle{0%,100%{opacity:.35;transform:scale(.8) rotate(0)}50%{opacity:1;transform:scale(1.1) rotate(20deg)}}
+
+/* REFER */
+.panel{background:var(--surface);border-radius:24px;padding:40px}
+.eyebrow{font-size:14px;letter-spacing:1.5px;color:var(--muted);margin-bottom:8px}
+.h2{font-size:clamp(28px,3.5vw,48px);font-weight:700;letter-spacing:-.01em}
+.refer-grid{display:grid;grid-template-columns:342fr 342fr 484fr;gap:24px;margin:32px 0}
+.refer-grid h4{font-size:16px;margin-bottom:12px;color:#ddd}
+.rcard{display:block;border-radius:12px;overflow:hidden;transition:transform .35s var(--ease),box-shadow .35s}
+.rcard img{width:100%;aspect-ratio:2.01;object-fit:cover;transition:transform .6s var(--ease)}
+.rcard:hover{transform:translateY(-4px);box-shadow:0 18px 30px -12px rgba(20,147,255,.45)}
+.rcard:hover img{transform:scale(1.04)}
+
+/* WAYS */
+.ways{display:grid;grid-template-columns:1fr 1.2fr;gap:40px;align-items:center;padding:180px 0 120px}
+.ways h2{font-size:clamp(32px,4vw,48px);line-height:1.1;font-weight:700}
+.ways h2 .blue{display:inline-block;transition:opacity .25s,transform .25s}
+.ways ul.list{margin:18px 0 32px 48px;color:#ddd;line-height:1.75}
+.ways ul.list li{transition:opacity .3s,transform .3s}
+.tabs{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:28px;position:relative}
+.tab{background:var(--surface-2);border-radius:99px;padding:6px 12px;font-weight:600;font-size:14px;position:relative;z-index:1;transition:color .25s,background .25s}
+.tab:hover{background:#2e2e31}
+.tab.on{background:#5aa9ff;color:#06204a}
+.map{position:relative}
+.map img{width:100%;transition:filter .5s,opacity .3s}
+.pin{position:absolute;left:79.5%;top:12%;width:40px;transform:translate(-50%,-100%);animation:drop .8s var(--ease) both;animation-play-state:paused}
+.pin::after{content:"";position:absolute;left:50%;bottom:-4px;width:12px;height:12px;border-radius:50%;transform:translate(-50%,50%);background:rgba(20,147,255,.6);animation:ping 2s ease-out infinite}
+.in .pin{animation-play-state:running}
+@keyframes drop{from{opacity:0;transform:translate(-50%,-160%)}}
+@keyframes ping{to{transform:translate(-50%,50%) scale(4);opacity:0}}
+
+/* STATS + REVIEWS */
+.stats{font-size:clamp(32px,4vw,48px);font-weight:700;line-height:1.1;margin:80px 0 40px}
+.marquee{overflow:hidden;mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent)}
+.track{display:flex;gap:34px;width:max-content;animation:scroll 40s linear infinite}
+.marquee:hover .track{animation-play-state:paused}
+@keyframes scroll{to{transform:translateX(calc(-50% - 17px))}}
+.review{width:490px;background:var(--surface);border-radius:12px;padding:24px;flex:none;transition:transform .3s var(--ease),background .3s}
+.review:hover{transform:translateY(-4px);background:#202022}
+.review .top{display:flex;justify-content:space-between;align-items:center;font-size:22px;font-weight:600;color:#ddd}
+.review .top span{font-size:16px;font-weight:400;color:var(--muted)}
+.stars{color:var(--blue);font-size:24px;letter-spacing:2px;margin:6px 0 12px}
+.review q{display:block;font-size:30px;font-weight:600;line-height:1.3;padding-left:.35em;text-indent:-.35em}
+.review small{display:block;text-align:right;color:var(--muted);font-size:16px;margin-top:12px}
+
+/* FAQ */
+.faq-wrap{display:grid;grid-template-columns:848fr 416fr;gap:16px;margin:24px 0 160px}
+.faq{background:var(--surface);border-radius:12px;padding:16px 24px 24px}
+.q{border-bottom:1px solid transparent}
+.q button{width:100%;display:flex;justify-content:space-between;align-items:center;padding:12px 0;font-weight:600;font-size:16px;text-align:left}
+.q svg{transition:transform .35s var(--ease);flex:none}
+.q.open svg{transform:rotate(180deg)}
+.a{display:grid;grid-template-rows:0fr;transition:grid-template-rows .35s var(--ease)}
+.a>div{overflow:hidden;color:var(--muted);line-height:1.55;font-size:15px}
+.q.open .a{grid-template-rows:1fr}
+.q.open .a>div{padding-bottom:12px}
+.faq hr{border:0;border-top:1px solid #444;margin:12px 0 22px}
+.faq p{color:#ccc}
+.faq p a{color:var(--blue)}
+.plan{background:#00214f;border:1px solid #0b5bd3;border-radius:12px;padding:64px 24px;position:relative;overflow:hidden;transition:border-color .3s}
+.plan::before{content:"";position:absolute;inset:0;background:radial-gradient(400px circle at var(--mx,50%) var(--my,50%),rgba(20,147,255,.22),transparent 60%);opacity:0;transition:opacity .3s}
+.plan:hover::before{opacity:1}
+.plan:hover{border-color:#3a8dff}
+.plan h3{font-size:clamp(32px,3.6vw,48px);font-weight:700;margin-bottom:24px;position:relative}
+.plan p{position:relative;line-height:1.35}
+.plan a{text-decoration:underline}
+
+/* FOOTER */
+.footer{background:var(--surface);border-radius:24px 24px 0 0;padding:80px 0 40px}
+.apps{display:grid;grid-template-columns:1fr 1fr;gap:40px;margin:48px 0 140px}
+.app{display:flex;gap:36px;align-items:center}
+.qr{border-radius:8px;transition:transform .3s var(--ease)}
+.app:hover .qr{transform:scale(1.06) rotate(-2deg)}
+.app .brand{font-size:24px;margin-bottom:6px}
+.app p{color:var(--muted);margin-bottom:6px}
+.app .rt{color:var(--muted)} .app .rt b{color:var(--blue);letter-spacing:3px;font-weight:400}
+.links{display:grid;grid-template-columns:repeat(4,238px);font-size:12px;line-height:19px;color:#ddd;margin-bottom:24px}
+.links h5{font-size:12px;font-weight:700;margin:0 0 2px}
+.links h5+h5,.links ul+h5{margin-top:12px}
+.links ul{list-style:none}
+.links a:hover{color:var(--blue)}
+.legal-row{display:flex;justify-content:space-around;border-block:1px solid #555;padding:16px 0;font-size:12px;flex-wrap:wrap;gap:12px}
+.fine{font-size:11px;line-height:1.5;color:#ddd;margin-top:24px;display:grid;gap:8px}
+.pay{margin:40px auto 0;max-width:735px;width:100%}
+.back{position:fixed;right:24px;bottom:24px;width:44px;height:44px;border-radius:50%;background:var(--blue-btn);display:grid;place-items:center;opacity:0;transform:translateY(16px);transition:.3s var(--ease);z-index:40}
+.back.show{opacity:1;transform:none}
+
+/* REVEAL */
+.rv{opacity:0;transform:translateY(24px);transition:opacity .8s var(--ease),transform .8s var(--ease)}
+.rv.in{opacity:1;transform:none}
+.rv.d1{transition-delay:.08s}.rv.d2{transition-delay:.16s}.rv.d3{transition-delay:.24s}
+
+/* RESPONSIVE */
+@media (max-width:1100px){.nav ul{gap:18px}.links{grid-template-columns:repeat(2,1fr);gap:20px}}
+@media (max-width:960px){
+  .nav ul{display:none;position:absolute;top:64px;left:0;right:0;flex-direction:column;gap:0;background:#0b0b0c;padding:8px 24px 16px;border-bottom:1px solid #222}
+  .nav.open ul{display:flex}
+  .nav ul a{display:block;padding:12px 0}
+  .burger{display:block;margin-right:-8px}.pill span{display:none}
+  .nav.open .burger span:first-child{transform:translateY(4px) rotate(45deg)}
+  .nav.open .burger span:last-child{transform:translateY(-4px) rotate(-45deg)}
+  .hero-card{grid-template-columns:1fr;min-height:0}
+  .hero-copy{padding:40px 24px 24px}
+  .phone{width:min(260px,70%)}
+  .refer-grid{grid-template-columns:1fr;gap:20px}
+  .panel{padding:24px}
+  .ways{grid-template-columns:1fr;padding:80px 0 40px}
+  .ways .map-col{order:2}
+  .faq-wrap{grid-template-columns:1fr;margin-bottom:80px}
+  .apps{grid-template-columns:1fr;margin-bottom:60px}
+  .review{width:300px}.review q{font-size:22px}
+}
+@media (max-width:560px){.links{grid-template-columns:1fr}.app{gap:18px}.qr{width:96px}}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}.rv{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute"><symbol id="fd" viewBox="0 0 24 24"><path fill="currentColor" d="M3 2h18l-1.2 10.5C19.3 17 15.8 20.3 12 22 8.2 20.3 4.7 17 4.2 12.5L3 2Zm4 3 .7 6.4C8 14 9.6 16 12 17.4c.7-.4 1.3-.9 1.8-1.4L11 13l3-3-2-2 4-3H7Z"/></symbol>
+<symbol id="spark" viewBox="0 0 24 24"><path fill="currentColor" d="M12 0c.6 6.5 5.5 11.4 12 12-6.5.6-11.4 5.5-12 12-.6-6.5-5.5-11.4-12-12C6.5 11.4 11.4 6.5 12 0Z"/></symbol>
+<symbol id="chev" viewBox="0 0 16 16"><path d="M3 6l5 5 5-5" fill="none" stroke="#1493ff" stroke-width="1.5"/></symbol></svg>
+
+<nav class="nav" id="nav">
+  <div class="wrap">
+    <a class="logo" href="#"><svg width="22" height="22"><use href="#fd"/></svg>FANDUEL</a>
+    <ul>
+      <li><a href="#">Sportsbook</a></li><li><a href="#">Casino</a></li><li><a href="#">Predicts</a></li>
+      <li><a href="#">Picks</a></li><li><a href="#">Fantasy</a></li><li><a href="#">Racing</a></li>
+      <li><a href="#">Research</a></li><li><a href="#">TV+</a></li><li><a href="#">Faceoff</a></li>
+    </ul>
+    <div class="nav-r">
+      <a class="pill" href="#faq"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="#fff"><circle cx="8" cy="8" r="7"/><path d="M6 6.2a2 2 0 1 1 2.6 1.9c-.4.2-.6.5-.6.9v.5M8 11.5v.2"/></svg><span>Support</span></a>
+      <a class="btn btn-green" href="#">Log in</a>
+      <button class="burger" aria-label="Menu" id="burger"><span></span><span></span></button>
+    </div>
+  </div>
+</nav>
+
+<main class="wrap">
+  <h1 class="rv">Welcome to the world of FanDuel</h1>
+
+  <section class="hero-card sb rv d1" data-tilt>
+    <div class="glow"></div>
+    <svg class="spark" style="right:13%;top:2%;width:34px"><use href="#spark"/></svg>
+    <svg class="spark" style="left:45%;top:15%;width:34px;animation-delay:.8s"><use href="#spark"/></svg>
+    <svg class="spark" style="left:45%;top:40%;width:34px;animation-delay:1.6s"><use href="#spark"/></svg>
+    <svg class="spark" style="left:50%;top:33%;width:12px;animation-delay:.4s"><use href="#spark"/></svg>
+    <svg class="spark" style="right:28%;top:3%;width:12px;animation-delay:2s"><use href="#spark"/></svg>
+    <div class="hero-copy">
+      <div class="brand"><svg width="24" height="24"><use href="#fd"/></svg>SPORTSBOOK</div>
+      <h2>Where fans<br>become champions</h2>
+      <div class="offer">
+        <span class="tag">NEW USER OFFER</span>
+        <p>Get <span class="blue">$100 Bonus Bets</span> if your first $5 bet wins</p>
+        <a class="btn btn-blue" href="#">Join Sportsbook</a>
+      </div>
+    </div>
+    <div class="phone"><img src="assets/phone-sb.png" alt="FanDuel Sportsbook app"></div>
+  </section>
+
+  <section class="hero-card cas rv" data-tilt>
+    <div class="glow"></div>
+    <svg class="spark" style="right:13%;top:2%;width:34px"><use href="#spark"/></svg>
+    <svg class="spark" style="left:45%;top:13%;width:34px;animation-delay:.8s"><use href="#spark"/></svg>
+    <svg class="spark" style="left:45%;top:38%;width:34px;animation-delay:1.6s"><use href="#spark"/></svg>
+    <svg class="spark" style="left:50%;top:29%;width:12px;animation-delay:.4s"><use href="#spark"/></svg>
+    <div class="hero-copy">
+      <div class="brand"><svg width="24" height="24"><use href="#fd"/></svg>CASINO</div>
+      <h2>The thrills of Vegas<br>in your pocket</h2>
+      <div class="offer">
+        <span class="tag">NEW USER OFFER</span>
+        <p>Get <span class="blue">$100 in Casino Bonus</span></p>
+        <a class="btn btn-blue" href="#">Join Casino</a>
+      </div>
+    </div>
+    <div class="phone"><img src="assets/phone-casino.png" alt="FanDuel Casino app"></div>
+  </section>
+
+  <section class="panel rv" style="margin-top:120px">
+    <div class="eyebrow">REFER A FRIEND</div>
+    <h2 class="h2">Share the fun. <span class="blue">Get rewarded.</span></h2>
+    <div class="refer-grid">
+      <div class="rv d1"><h4>Sportsbook</h4><a class="rcard" href="#"><img src="assets/refer-sb.png" alt="Refer a friend – you both get bonus bets"></a></div>
+      <div class="rv d2"><h4>Casino</h4><a class="rcard" href="#"><img src="assets/refer-casino.png" alt="Refer a friend – get $100 in casino bonus"></a></div>
+      <div class="rv d3"><h4>Predicts</h4><a class="rcard" href="#"><img src="assets/refer-predicts.png" alt="Refer a friend – get $100"></a></div>
+    </div>
+    <a class="btn btn-outline" href="#">View all FanDuel offers</a>
+  </section>
+
+  <section class="ways">
+    <div class="rv">
+      <h2>Ways to play in<br><span class="blue">Pennsylvania</span></h2>
+      <ul class="list" id="list"><li>Sportsbook</li><li>Casino</li><li>Predicts</li><li>Fantasy</li></ul>
+      <a class="btn btn-blue" id="waysBtn" href="#">Join Sportsbook</a>
+    </div>
+    <div class="map-col rv d1" id="mapCol">
+      <div class="tabs" id="tabs">
+        <button class="tab on">Sportsbook</button><button class="tab">Casino</button><button class="tab">Predicts</button>
+        <button class="tab">Fantasy</button><button class="tab">Racing</button><button class="tab">Faceoff</button>
+      </div>
+      <div class="map"><img id="mapImg" src="assets/map.png" alt="Map of states where FanDuel Sportsbook is available"></div>
+    </div>
+  </section>
+
+  <div class="stats rv"><span class="blue" data-count>X</span> million players.<br><span class="blue">X</span> billion won.</div>
+</main>
+
+<div class="marquee rv"><div class="track" id="track"></div></div>
+
+<main class="wrap" id="faq">
+  <h2 class="h2 rv" style="margin-top:120px">Get to know FanDuel</h2>
+  <div class="faq-wrap">
+    <div class="faq rv d1" id="faqList"></div>
+    <div class="plan rv d2" id="plan">
+      <h3>Play with a plan</h3>
+      <p>Visit <a href="#">fanduel.com/playwithaplan</a> for tools and resources to help you stay in control of the way you play.</p>
+    </div>
+  </div>
+</main>
+
+<footer class="footer">
+  <div class="wrap">
+    <h2 class="h2 rv">Your game, anywhere</h2>
+    <div class="apps">
+      <div class="app rv d1"><img class="qr" src="assets/qr-sb.png" width="132" alt="QR code for Sportsbook app"><div><div class="brand"><svg width="28" height="28"><use href="#fd"/></svg>SPORTSBOOK</div><p>Scan to download our app today</p><div class="rt"><b>★★★★★</b> 2.1M ratings on Apple</div></div></div>
+      <div class="app rv d2"><img class="qr" src="assets/qr-casino.png" width="132" alt="QR code for Casino app"><div><div class="brand"><svg width="28" height="28"><use href="#fd"/></svg>CASINO</div><p>Scan to download our app today</p><div class="rt"><b>★★★★★</b> 167K ratings on Apple</div></div></div>
+    </div>
+    <div class="links" id="links"></div>
+    <div class="legal-row"><a href="#">• Careers</a><a href="#">• Security</a><a href="#">• Privacy Policy</a><a href="#">• Terms of Use</a><a href="#">• Press &amp; Media</a></div>
+    <div class="fine">
+      <div>© Betfair Interactive US LLC, 2021</div>
+      <div>Gambling Problem? Call <b>1-800-NEXT-STEP</b> or text NEXTSTEP to <b>53342</b></div>
+      <div>This site has been authorized by the Arizona Gaming Control Board for use by registered users physically present in Arizona.</div>
+      <div>Persons under 21 are not permitted to engage in sports wagering.</div>
+      <div>For Regulator, Law Enforcement or similar inquiries ONLY, please call <b>(732) 646-6232.</b> Do NOT use for customer requests or questions.<br>For customer support please contact us <b>here.</b></div>
+    </div>
+    <img class="pay" src="assets/payments.png" alt="Accepted payment methods and responsible gaming partners">
+  </div>
+</footer>
+<a class="back" id="back" href="#" aria-label="Back to top"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="#fff" stroke-width="2"><path d="M8 13V3M3 8l5-5 5 5"/></svg></a>
+
+<script>
+const $=s=>document.querySelector(s);
+
+// Reveal on scroll
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.15});
+document.querySelectorAll('.rv').forEach(el=>io.observe(el));
+
+// Nav + back-to-top
+addEventListener('scroll',()=>{const y=scrollY;$('#nav').classList.toggle('scrolled',y>10);$('#back').classList.toggle('show',y>900)},{passive:true});
+$('#burger').onclick=()=>$('#nav').classList.toggle('open');
+
+// Hero: pointer parallax on phone + sparkles (desktop only)
+const fine=matchMedia('(pointer:fine)').matches&&!matchMedia('(prefers-reduced-motion:reduce)').matches;
+document.querySelectorAll('[data-tilt]').forEach(card=>{
+  if(!fine)return;
+  const phone=card.querySelector('.phone'),sparks=card.querySelectorAll('.spark');
+  card.addEventListener('pointermove',e=>{
+    const r=card.getBoundingClientRect(),x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;
+    phone.style.transform=`perspective(900px) rotateY(${x*8}deg) rotateX(${-y*6}deg) translate(${x*10}px,${y*8}px)`;
+    sparks.forEach((s,i)=>s.style.translate=`${-x*(10+i*6)}px ${-y*(10+i*6)}px`);
+  });
+  card.addEventListener('pointerleave',()=>{phone.style.transform='';sparks.forEach(s=>s.style.translate='')});
+});
+
+// Ways to play tabs
+const products={Sportsbook:['Sportsbook','Casino','Predicts','Fantasy'],Casino:['Casino','Sportsbook','Fantasy'],Predicts:['Predicts','Sportsbook','Fantasy'],Fantasy:['Fantasy','Sportsbook','Casino'],Racing:['Racing','Sportsbook','Fantasy'],Faceoff:['Faceoff','Fantasy']};
+const hue={Sportsbook:0,Casino:55,Predicts:-40,Fantasy:150,Racing:-170,Faceoff:90};
+$('#tabs').addEventListener('click',e=>{
+  const t=e.target.closest('.tab');if(!t)return;
+  document.querySelectorAll('.tab').forEach(b=>b.classList.toggle('on',b===t));
+  const k=t.textContent,img=$('#mapImg'),list=$('#list');
+  img.style.opacity=.4;list.style.opacity=0;
+  setTimeout(()=>{
+    img.style.filter=`hue-rotate(${hue[k]}deg)`;img.style.opacity=1;img.alt=`Map of states where FanDuel ${k} is available`;
+    list.innerHTML=products[k].map((p,i)=>`<li style="opacity:0;transform:translateX(-8px);transition-delay:${i*60}ms">${p}</li>`).join('');
+    list.style.opacity=1;$('#waysBtn').textContent='Join '+k;
+    requestAnimationFrame(()=>requestAnimationFrame(()=>list.querySelectorAll('li').forEach(li=>{li.style.opacity=1;li.style.transform='none'})));
+  },200);
+});
+
+// Reviews marquee (duplicated for seamless loop)
+const rev=`<div class="review"><div class="top">Thank you<span>&#63743; Bucknj13</span></div><div class="stars">★★★★★</div><q>building parlays is simple, everything loads fast</q><small>Month Day, Year</small></div>`;
+$('#track').innerHTML=rev.repeat(10);
+
+// FAQ accordion
+const faqs=[["When will I get my reward?","Rewards are typically credited within 72 hours after your friend completes the qualifying requirements."],["Why don’t I see my friend’s name?","Your friend must sign up using your unique referral link and verify their account before they appear in your referrals."],["Who can I refer?","Anyone 21+ located in an eligible state who doesn’t already have a FanDuel account."],["How do deposits and withdrawals work?","Deposit instantly with PayPal, Venmo, ACH or card. Withdrawals are processed to your original payment method, usually within 1–3 business days."]];
+$('#faqList').innerHTML=faqs.map(([q,a])=>`<div class="q"><button aria-expanded="false">${q}<svg width="16" height="16"><use href="#chev"/></svg></button><div class="a"><div>${a}</div></div></div>`).join('')+`<hr><p>If you still have questions, our <a href="#">Support Team</a> is here to help.</p>`;
+$('#faqList').addEventListener('click',e=>{const b=e.target.closest('.q button');if(!b)return;const q=b.parentElement,o=!q.classList.contains('open');document.querySelectorAll('.q').forEach(x=>{x.classList.remove('open');x.firstElementChild.setAttribute('aria-expanded',false)});q.classList.toggle('open',o);b.setAttribute('aria-expanded',o)});
+
+// Plan card spotlight
+$('#plan').addEventListener('pointermove',e=>{const r=e.currentTarget.getBoundingClientRect();e.currentTarget.style.setProperty('--mx',e.clientX-r.left+'px');e.currentTarget.style.setProperty('--my',e.clientY-r.top+'px')});
+
+// Footer links
+const cols=[[["ABOUT",["Register","All Sports","Promotions","Support","About Us","FAQ’s","Betting Guides","Responsible Gaming","Accessibility","California Privacy Rights","Do Not Sell My Personal Information"]]],[["FANDUEL GROUP SITES",["Fanduel Fantasy","Fanduel Racing","FanDuel Casino","TVG","numberFire","The Duel","Draft"]],["FANDUEL APPS",["Fantasy (iOS)","Fantasy (Android)","Sportsbook (iOS)","Sportsbook (Android)"]]],[["SPORTSBOOK ODDS",["NFL Odds","NFL Team Odds","NBA Odds","NBA Team Odds","MLB Odds","NHL Odds","College Football Odds","College Basketball Odds","Soccer Odds","Golf Odds","UFC Odds","NASCAR and F1 Odds"]]],[["FOLLOW FANDUEL",["Facebook","Twitter","Instagram","YouTube","Snapchat"]]]];
+$('#links').innerHTML=cols.map(c=>`<div>${c.map(([h,l])=>`<h5>${h}</h5><ul>${l.map(x=>`<li><a href="#">${x}</a></li>`).join('')}</ul>`).join('')}</div>`).join('');
+</script>
+</body>
+</html>
